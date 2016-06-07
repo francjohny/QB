@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Form Validation</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="form.css">
+  <style>
+  body {
+  	background: #485563; /* fallback for old browsers */
+	background: -webkit-linear-gradient(to left, #485563 , #29323c); /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to left, #485563 , #29323c); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */        
+}
+  label, h2 {
+  	color: white;
+  }
+
+  form-group, control-label :after {
+  content:"*"; color:red;
+  }
+
+  </style>
+  <link href="http://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css" rel="stylesheet">  
+  <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+  <script src="http://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
+  <script>
+	function validateForm() {
+	    var x = document.forms["myForm"]["name"].value;
+	    if (x == null || x == "") {
+	        alert("Name must be filled out");
+	        return false;
+	    }
+	}
+	$("form").bind("submit", validate);
+  </script>
+  
+  <script type="text/javascript">
+	$(document).ready(function(){   
+		$('#datetimepicker1').datetimepicker();
+	});
+  </script>
+
+  <script type="text/javascript">
+
+  function checkForm(form)
+  {
+    if(form.name.value == "") {
+      alert("Error: Name cannot be blank!");
+      form.name.focus();
+      return false;
+    }
+
+    if(form.dob.value == "") {
+      alert("Error: Date of Birth cannot be blank!");
+      form.name.focus();
+      return false;
+    }
+
+    if(form.email.value == "") {
+      alert("Error: Email cannot be blank!");
+      form.name.focus();
+      return false;
+    }
+
+    re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (!re.test(form.email.value)) {
+    	alert("Error: Please enter a valid email address!");
+    	form.email.focus();
+    	return false;
+    }
+
+    if(form.address.value == "") {
+      alert("Error: Address cannot be blank!");
+      form.name.focus();
+      return false;
+    }
+
+    re = /^\w+$/;
+    if(!re.test(form.name.value)) {
+      alert("Error: Name must contain only letters, numbers and underscores!");
+      form.name.focus();
+      return false;
+    }
+
+    if(form.pwd.value != "") {
+      if(form.pwd.value.length < 6) {
+        alert("Error: Password must contain at least six characters!");
+        form.pwd.focus();
+        return false;
+      }
+      if(form.pwd.value == form.username.value) {
+        alert("Error: Password must be different from Name!");
+        form.pwd.focus();
+        return false;
+      }
+      re = /[0-9]/;
+      if(!re.test(form.pwd.value)) {
+        alert("Error: password must contain at least one number (0-9)!");
+        form.pwd.focus();
+        return false;
+      }
+      re = /[a-z]/;
+      if(!re.test(form.pwd.value)) {
+        alert("Error: password must contain at least one lowercase letter (a-z)!");
+        form.pwd.focus();
+        return false;
+      }
+      re = /[A-Z]/;
+      if(!re.test(form.pwd.value)) {
+        alert("Error: password must contain at least one uppercase letter (A-Z)!");
+        form.pwd.focus();
+        return false;
+      }
+    } else {
+      alert("Error: Please check that you've entered and confirmed your password!");
+      form.pwd.focus();
+      return false;
+    }
+
+    alert("validation successful");
+    return true;
+  }
+
+</script>
+</head>
+<body>
+
+<div class="container">
+  <h2>Sign Up</h2>
+  <form class="form-horizontal" role="form" action="sucess.html" onsubmit="return checkForm(this)" method="post">
+  	
+  	<div class="form-group">
+      <label class="control-label col-sm-2" for="name">Name:</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="name" placeholder="Enter name" required>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="dob">Date of Birth:</label>
+      <div class="col-sm-10">
+        <div class='input-group date' id='datetimepicker1'>
+	        <input type='text' class="form-control" id="dob" placeholder="Enter date of birth" required>
+	        <div class="input-group-addon">
+	           <span class="glyphicon glyphicon-calendar"></span>
+	        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="email">Email:</label>
+      <div class="col-sm-10">
+        <input type="" class="form-control" id="email" placeholder="Enter email" required>
+      </div>
+    </div>
+    
+    <div class="form-group">
+  	  <label class="control-label col-sm-2" for="address">Address:</label>
+  	  <div class="col-sm-10">
+      <textarea class="form-control" rows="5" id="address" required></textarea>
+      </div>
+	</div>
+    
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="pwd">Password:</label>
+      <div class="col-sm-10">          
+        <input type="password" class="form-control" id="pwd" placeholder="Enter password" required>
+      </div>
+    </div>
+    
+    <div class="form-group">        
+      <div class="col-sm-offset-2 col-sm-10">
+        <div class="checkbox">
+          <label><input type="checkbox"> Remember me</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">        
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-default">Submit</button>
+      </div>
+    </div>
+  </form>
+</div>
+</body>
+</html>
+
